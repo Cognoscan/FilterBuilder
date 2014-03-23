@@ -1,10 +1,12 @@
 #ifndef FIRCALC_H_
 #define FIRCALC_H_
 
-#include <math.h>
-
-const double FIRCALC_PI = 3.14159265
-
-void FIRCalcHamming(int length, int cutoff, double *coeffs);
+void FIRCalcWindow(int length, double cutoff, double *coeffs, double *window);
+void FIRCalcHann(int length, double cutoff, double *coeffs);
+void FIRCalcHamming(int length, double cutoff, double *coeffs);
+void FIRCalcBlackman(int length, double cutoff, double *coeffs, double alpha);
+void FIRCalcExactBlackman(int length, double cutoff, double *coeffs);
+void FIRCalcBlackmanHarris(int length, double cutoff, double *coeffs);
+void FIRCalcKaiser(int length, double cutoff, double *coeffs, double alpha);
 
 #endif

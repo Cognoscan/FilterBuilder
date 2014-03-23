@@ -20,18 +20,18 @@
  */
 
 #include <stdio.h>
-#include <cstring.h>
+#include <string.h>
 #include <stdlib.h>
 
 #include "FIRCalc.h"
 
 /// Main terminal program
-int main( int argc, int *argv[])
+int main( int argc, char *argv[])
 {
   int success = 0;
 
-  if (argc != 5) {
-    printf("Usage: %s ORDER CUTOFF TYPE WINDOW", argv[0]);
+  if (argc < 5) {
+    printf("Usage: %s ORDER CUTOFF TYPE WINDOW [WINDOW_PARAMS]", argv[0]);
     return 1;
   }
 
@@ -39,15 +39,21 @@ int main( int argc, int *argv[])
   double cutoff;
   double *coeffs;
 
-  sscanf("%i", length); length += 1; // Length is 1 greater than the order
-  sscanf("%lf", cutoff);
+  sscanf(argv[1], "%i", &length);
+  length += 1; // Length is 1 greater than the order
+  sscanf(argv[2], "%lf", &cutoff);
 
   coeffs = (double *) malloc(length * sizeof(double));
 
   if (strcmp(argv[4], "hamming") == 0)
   {
-    FIRCalcHamming(order, cutoff, coeffs);
-  } else {
+    FIRCalcHamming(length, cutoff, coeffs);
+  } else if (strcmp(argv[4], "exact-blackman") == 0) {
+    FIRCalcExactBlackman(length, cutoff, coeffs);
+  } else if (strcmp(argv[4], "blackman") == 0) {
+    double alpha;
+    sscanf(argv[5], "%lf", alpha);
+    FIRCalcBlackman(length, cutoff, coeffs, alpha);
     printf("Not a valid window type\n");
     success = 1;
   }
