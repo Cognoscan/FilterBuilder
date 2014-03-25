@@ -48,12 +48,25 @@ int main( int argc, char *argv[])
   if (strcmp(argv[4], "hamming") == 0)
   {
     FIRCalcHamming(length, cutoff, coeffs);
-  } else if (strcmp(argv[4], "exact-blackman") == 0) {
+  }
+  else if (strcmp(argv[4], "exact-blackman") == 0)
+  {
     FIRCalcExactBlackman(length, cutoff, coeffs);
-  } else if (strcmp(argv[4], "blackman") == 0) {
+  }
+  else if (strcmp(argv[4], "blackman") == 0)
+  {
     double alpha;
-    sscanf(argv[5], "%lf", alpha);
+    sscanf(argv[5], "%lf", &alpha);
     FIRCalcBlackman(length, cutoff, coeffs, alpha);
+  }
+  else if (strcmp(argv[4], "kaiser") == 0)
+  {
+    double alpha;
+    sscanf(argv[5], "%lf", &alpha);
+    FIRCalcKaiser(length, cutoff, coeffs, alpha);
+  }
+  else
+  {
     printf("Not a valid window type\n");
     success = 1;
   }
